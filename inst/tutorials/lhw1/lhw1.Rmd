@@ -1,0 +1,81 @@
+---
+title: "LearnR Homework 1"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+# library("gradethis")
+library("learnr")
+library("tidyverse")
+knitr::opts_chunk$set(echo = FALSE)
+# gradethis::gradethis_setup()
+num_correct <- 0
+```
+
+# LearnR Homework
+
+This `LearnR` setting lets the teacher make self-paced tutorials that ease instruction of R programming.
+
+## Setup
+
+First, please enter your full name and UC Merced e-mail address into the variables below.  Be sure to keep the strings inside of the quotation marks.  Press `Run Code` to verify the input.
+
+```{r name_field, exercise = TRUE}
+student_name  <- ""
+student_email <- ""
+print(student_name)
+print(student_email)
+print(Sys.time())
+```
+
+## Arrays
+
+In `R`, we use the `c()` function to concatenate data (such as numbers or strings) into arrays.
+
+```{r universal_set, exercise = TRUE, exercise.lines = 2}
+universal_set <- seq(1,32)
+print(universal_set)
+```
+
+For instance, the following code creates an array that contains the multiples of 5 between 1 and 32.
+
+```{r fives, exercise = TRUE, exercise.lines = 1}
+fives <- c(5, 10, 15, 20, 25, 30)
+```
+
+Create an array called `threes` that contains the multiples of 3 between 1 and 32.
+
+```{r threes, exercise = TRUE, exercise.lines = 2}
+threes <- c()
+print(threes)
+```
+
+
+## Intersection and Union
+
+```{r sets_setup}
+fives  <- seq(5, 30, 5)
+threes <- seq(3, 30, 3)
+```
+
+Recall that the *intersection* of two sets has the elements that appear in both sets, while the *union* of two sets has the elements that appear in at least one set.  Here is how we can compute the `intersect` of `fives` and `threes` in R.
+
+```{r intersect_example, exercise = TRUE, exercise.lines = 1, exercise.setup = "sets_setup"}
+intersect(fives, threes)
+```
+
+Compute the `union` of `fives` and `threes` in the code block below (after the assignment arrow).
+
+```{r union_exercise, exercise = TRUE, exercise.lines = 1, exercise.setup = "sets_setup"}
+
+```
+
+
+## Submission
+
+* take a screenshot of each page of this assignment (try not to include the left-hand menu to "zoom in" on the content)
+* copy and paste the screenshots onto a Word document (or Google Doc or equivalent)
+* be sure that your name appears on the document
+* save as a PDF
+* upload the PDF back to our CatCourses page
