@@ -1,0 +1,249 @@
+---
+title: "Tutorial 3"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library("gradethis")
+library("learnr")
+library("learnrhash")
+library("tidyverse")
+library("titanic")
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Bio 18 Learn R Tutorial 3
+
+Be sure to click "Run Code" and "Submit Answer" where appropriate.  You may go back and fix code if an error is reported.
+
+
+
+## Bayes Rule 1
+
+### Concept Check
+
+$$P(A|B) = P(B|A)$$
+
+```{r concept-check-1}
+quiz(
+  question("Is the statement above TRUE or FALSE?",
+    answer("TRUE"),
+    answer("FALSE", correct = TRUE),
+    allow_retry = TRUE
+  )
+)
+```
+
+### Example 1
+
+
+
+A 2009 federal study showed that 63.8% of occupants involved in a fatal car crash wore seat belts.  Of those in a fatal crash who wore seat belts, 2% were ejected from the vehicle.  For those not wearing seat belts, 36% were ejected from the vehicle.  (Source:  National Highway Traffic Safety Administration)
+
+Let
+
+* E: passenger was ejected from the vehicle
+* S: passenger was wearing a seat belt
+
+```{r seatbelts1}
+quiz(
+  question("Translate the following into math notation: 'A 2009 federal study showed that 63.8 percent of occupants involved in a fatal car crash wore seat belts.'",
+    answer("P(S) = 0.638", correct = TRUE),
+    answer("P(S|E) = 0.638"),
+    answer("P(E|S) = 0.638"),
+    answer("P(E|S^c ) = 0.638"),
+    answer("P(S|E^c ) = 0.638"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+)
+```
+
+```{r seatbelts2}
+quiz(
+  question("Translate the following into math notation: 'For those not wearing seat belts, 36% were ejected from the vehicle.'",
+    answer("P(S) = 0.36"),
+    answer("P(S|E) = 0.36"),
+    answer("P(E|S) = 0.36"),
+    answer("P(E|S^c ) = 0.36", correct = TRUE),
+    answer("P(S|E^c ) = 0.36"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+)
+```
+
+```{r seatbelts3}
+quiz(
+  question("Translate the following into math notation: 'Of those in a fatal crash who wore seat belts, 2% were ejected from the vehicle.'",
+    answer("P(S) = 0.02"),
+    answer("P(S|E) = 0.02"),
+    answer("P(E|S) = 0.02", correct = TRUE),
+    answer("P(E|S^c ) = 0.02"),
+    answer("P(S|E^c ) = 0.02"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+)
+```
+
+Given that the passenger in a fatal car crash was ejected from the vehicle, find the probability that that passenger was wearing a seat belt.
+
+```{r seatbelts4, exercise = TRUE}
+answer1 <- 0.1234 #replace this number with the correct answer
+answer1 #leave this line of code as is for the grader
+```
+
+```{r, seatbelts4-check}
+grade_this({
+  if (abs(.result - 0.0892 ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+
+## Bayes Rule 2
+
+### Example 2
+
+Suppose that, for a fictional country, the probability that a missing airplane is discovered is given by
+
+$$P(D) = 0.7$$
+
+Furthermore, we are handed studies which show that
+
+$$P(L|D) = 0.6$$
+$$P(L^{c}|D^{c}) = 0.9$$
+
+where $L$ is the event that the airplane had an emergency locator.
+
+```{r airplane1}
+quiz(
+  question(sprintf("Interpret $P(L|D)$"),
+    answer("the probability that the airplane has an emergency locator given that it was discovered", correct = TRUE),
+    answer("the probability that the airplane has an emergency locator given that it was not discovered"),
+    answer("the probability that the airplane has an emergency locator and that it was discovered"),
+    answer("the probability that the airplane has an emergency locator and that it was not discovered"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+)
+```
+
+```{r airplane2}
+quiz(
+  question(sprintf("Interpret $P( L^c | D^c ) = 0.90$"),
+    answer("the probability that an airplane does not have an emergency locator given that it was not discovered is 90%", correct = TRUE),
+    answer("the probability that an airplane does not have an emergency locator given that it was discovered is 90%"),
+    answer("the probability that an airplane does have an emergency locator given that it was discovered is 90%"),
+    answer("the probability that an airplane does have an emergency locator given that it was not discovered is 90%"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+)
+```
+
+Compute $P(D^{c}|L)$
+
+```{r airplane3, exercise = TRUE}
+answer2 <- 0.1234 #replace this number with the correct answer
+answer2 #leave this line of code as is for the grader
+```
+
+```{r, airplane3-check}
+grade_this({
+  if (abs(.result - 0.0667 ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+
+## Discrete Probability Distribution
+
+```{r banana1, exercise = TRUE}
+# https://www.amazon.com/Hutzler-3571-571-Banana-Slicer/dp/B0047E0EII/
+stars <- 1:5
+probs <- c(4, 4, 8, 12, 72) / 100
+
+df <- data.frame(stars, probs)
+
+df %>%
+  ggplot(aes(x = stars, y = probs)) +
+  geom_bar(fill = "seagreen3", stat = "identity") +
+  labs(title = "Banana Slicer",
+       subtitle = "Amazon ratings",
+       caption = "Bio 18",
+       x = "stars",
+       y = "probability") +
+  theme_minimal()
+```
+
+```{r banana2}
+quiz(
+  question("This graph is a ",
+    answer("bar plot", correct = TRUE),
+    answer("histogram"),
+    answer("scatterplot"),
+    answer("line plot"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+)
+```
+
+```{r banana3}
+quiz(
+  question("Which of the following descriptions is most appropriate for the graph?",
+    answer("skewed left", correct = TRUE),
+    answer("skewed right"),
+    answer("bell curve"),
+    allow_retry = TRUE,
+    random_answer_order = TRUE
+  )
+)
+```
+
+What is the probability that a user rated the item either "4" or "5"?  Please input your answer as a decimal number.
+
+```{r banana4, exercise = TRUE}
+answer3 <- 0.18 #replace this number with the correct answer
+answer3 #leave this line of code as is for the grader
+```
+
+```{r, banana4-check}
+grade_this({
+  if (abs(.result - 0.84) < 0.01){
+    pass()
+  }
+  fail()
+})
+```
+
+
+
+## Wrap Up
+
+Type your name and UC Merced e-mail address inside the quotation marks
+
+```{r student-info, exercise = TRUE}
+student_name  <- ""
+student_email <- ""
+```
+
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(
+  ui_before = default_ui(url = "https://catcourses.ucmerced.edu")
+)
+```
+

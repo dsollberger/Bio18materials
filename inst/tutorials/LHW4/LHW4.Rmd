@@ -1,0 +1,190 @@
+---
+title: "Tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library("gradethis")
+library("learnr")
+library("learnrhash")
+library("tidyverse")
+library("visualize")
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Bio 18 LearnR Tutorial 4
+
+Today, you are picking an avocado for dinner tonight.  In the bin, suppose that there is a 32 percent chance of randomly selecting a ripe avocado.  If you buy a bag of avocados, you do not inspect the fruit until you get home and inspect the bag of avocados all at once.
+
+## Bin(n,p)
+
+For the following calculations, use the `dbinom` or `pbinom` commands (maybe along with other R functions that have been introduced).
+
+### Exactly
+
+What is the probability that you have exactly 3 ripe avocados in a bag of 7 avocados?
+
+```{r q2, exercise = TRUE, exercise.lines = 1}
+
+```
+
+```{r q2-check}
+grade_this({
+  if (abs(.result - dbinom(3, 7, 0.32) ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+
+### Fewer
+
+What is the probability that you have fewer than 4 ripe avocados among a bag of 8 avocados?
+
+```{r q3, exercise = TRUE, exercise.lines = 1}
+
+```
+
+```{r q3-check}
+grade_this({
+  if (abs(.result - sum(dbinom(0:4, 8, 0.32)) ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+
+### More
+
+What is the probability that you have more than 3 ripe avocados in your bag of 6 avocados?
+
+```{r q6, exercise = TRUE, exercise.lines = 1}
+
+```
+
+```{r q6-check}
+grade_this({
+  if (abs(.result - sum(dbinom(4:6, 6, 0.32)) ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+
+## Inclusive Inequalities
+
+In mathematics, the *strict* inequalities are "less than" ($<$) and "greater than" ($>$); while the *inclusive* inequalities are "less than or equal" ($\leq$) and "greater than or equal" ($\geq$).
+
+### At Least
+
+What is the probability that you have at least 4 ripe avocados in your bag of 7 avocados?
+
+```{r q7, exercise = TRUE, exercise.lines = 1}
+
+```
+
+```{r q7-check}
+grade_this({
+  if (abs(.result - sum(dbinom(4:7, 7, 0.32)) ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+
+### At Most
+
+What is the probability that you have at most 5 ripe avocados from the your bag of 9 avocados?
+
+```{r q10, exercise = TRUE, exercise.lines = 1}
+
+```
+
+```{r q10-check}
+grade_this({
+  if (abs(.result - sum(dbinom(0:5, 9, 0.32)) ) < 0.001){
+    pass()
+  }
+  fail()
+})
+```
+
+## Visualize
+
+Here are some examples of using the `visualize` package (created by Dr. Balamuta at UIUC)
+
+```{r binom-at-most, exercise = TRUE, exercise.lines = 2}
+visualize.binom(stat = 3, size = 5, prob = 0.32, section = "lower", strict = FALSE)
+```
+
+```{r binom-more, exercise = TRUE, exercise.lines = 2}
+visualize.binom(stat = 3, size = 5, prob = 0.32, section = "upper", strict = TRUE)
+```
+
+```{r geom-less, exercise = TRUE, exercise.lines = 2}
+visualize.binom(stat = 3, prob = 0.32, section = "lower", strict = TRUE)
+```
+
+```{r geom-at-least, exercise = TRUE, exercise.lines = 2}
+visualize.binom(stat = 3, prob = 0.32, section = "upper", strict = FALSE)
+```
+
+## Binomial CMF
+
+On this page, $X \sim \text{Bin}(6, 0.32)$
+
+Use the `visualize.binom` function to create the graph of $P(k < 4)$
+
+```{r q11, exercise = TRUE, exercise.lines = 2}
+
+```
+
+```{r q11-solution}
+visualize.binom(stat = 4, size = 6, prob = 0.32, section = "lower", strict = TRUE)
+```
+
+```{r q11-check}
+grade_this_code()
+```
+
+Use the `visualize.binom` function to create the graph of $P(k \geq 2)$
+
+```{r q12, exercise = TRUE, exercise.lines = 2}
+
+```
+
+```{r q12-solution}
+visualize.binom(stat = 2, size = 6, prob = 0.32, section = "upper", strict = FALSE)
+```
+
+```{r q12-check}
+grade_this_code()
+```
+
+
+## Wrap Up
+
+Type your name and UC Merced e-mail address inside the quotation marks
+
+```{r student-info, exercise = TRUE}
+student_name  <- ""
+student_email <- ""
+```
+
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(
+  ui_before = default_ui(url = "https://catcourses.ucmerced.edu")
+)
+```
+
+

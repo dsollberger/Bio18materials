@@ -1,0 +1,224 @@
+---
+title: "Tutorial 2"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library("gradethis")
+library("learnr")
+library("learnrhash")
+library("tidyverse")
+library("titanic")
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+# Bio 18 Learn R Tutorial 2
+
+Be sure to click "Run Code" and "Submit Answer" where appropriate.  You may go back and fix code if an error is reported.
+
+Let $X = \{1, 2, 3, ..., 99, 100\}$
+
+## Sets
+
+### Sequences
+
+The provided code creates a sequence of natural numbers from 5 to 100 counting by multiples of 5. Create a sequence of natural numbers from 3 to 100 counting by multiples of 3.
+
+```{r sequences, exercise = TRUE}
+fives  <- seq(5, 100, 5)
+print(fives)
+threes <- seq(5, 100, 5)
+```
+
+```{r sequences-solution}
+fives  <- seq(5, 100, 5)
+print(fives)
+threes <- seq(3, 100, 3)
+```
+
+```{r sequences-check}
+grade_this_code()
+```
+
+
+### Intersection and Union
+
+```{r union-setup}
+fives  <- seq(5, 100, 5)
+threes <- seq(3, 100, 3)
+```
+
+
+The provided code prints the intersection of fives and threes. Write another line of code that prints the union of fives and threes
+
+```{r union, exercise = TRUE, exercise.lines = 2, exercise.setup = "union-setup"}
+print(intersect(fives, threes))
+
+```
+
+```{r union-solution}
+print(intersect(fives, threes))
+print(union(fives, threes))
+```
+
+```{r union-check}
+grade_this_code()
+```
+
+## Inclusion-Exclusion
+
+### Cardinality
+
+Print
+
+* the `length` of `fives`
+* the `length` of `threes`
+* the `length` of the intersection of `fives` and `threes`
+* the `length` of the union of `fives` and `threes`
+
+```{r cardinality, exercise = TRUE, exercise.lines = 4, exercise.setup = "union-setup"}
+print(length(fives))
+
+
+
+```
+
+```{r cardinality-solution}
+print(length(fives))
+print(length(threes))
+print(length(intersect(fives, threes)))
+print(length(union(fives, threes)))
+```
+
+```{r cardinality-check}
+grade_this_code()
+```
+
+
+### Concept Check
+
+Let $F$ be the event of randomly selecting from $X$ and getting a multiple of 5.
+
+Let $T$ be the event of randomly selecting from $X$ and getting a multiple of 3.
+
+Statement:
+
+$$P(F \text{ or } T) = P(F) + P(T)$$
+
+```{r concept-check-1}
+quiz(
+  question("Is the statement above TRUE or FALSE?",
+    answer("TRUE"),
+    answer("FALSE", correct = TRUE),
+    allow_retry = TRUE
+  )
+)
+```
+
+
+## Conditional Probability
+
+### Titanic Data
+
+The `titanic` data set contains information about the famous Titanic shipwreck ([package documentation](https://www.kaggle.com/c/titanic/data)).  Here is a quick look at the `titanic_train` data.
+
+```{r titanic-head}
+head(titanic_train)
+```
+
+### Example of Data Mining
+
+Here we compute the probability that a passenger was under 32 years old *given* that they were a first-class passenger.
+
+```{r titanic-example, exercise = TRUE}
+titanic_train %>%
+  filter(Pclass == 1) %>%
+  mutate(denominator = n()) %>%
+  filter(Age < 32) %>%
+  mutate(numerator = n()) %>%
+  mutate(ratio = numerator / denominator) %>%
+  summarize(cond_prob = unique(ratio))
+```
+
+## Conditional Probability Exercises
+
+### Titanic Exercise 1
+
+Compute the probability that a passenger was over 32 years old given that they were a third-class passenger.
+
+```{r titanic-exercise-1, exercise = TRUE}
+
+```
+
+```{r titanic-exercise-1-solution}
+titanic_train %>%
+  filter(Pclass == 3) %>%
+  mutate(denominator = n()) %>%
+  filter(Age > 32) %>%
+  mutate(numerator = n()) %>%
+  mutate(ratio = numerator / denominator) %>%
+  summarize(cond_prob = unique(ratio))
+```
+
+```{r titanic-exercise-1-check}
+grade_this_code()
+```
+
+### Titanic Exercise 2
+
+Compute the probability that a passenger was a third-class passenger *given* that they were over 32 years old.
+
+```{r titanic-exercise-2, exercise = TRUE}
+
+```
+
+```{r titanic-exercise-2-solution}
+titanic_train %>%
+  filter(Age > 32) %>%
+  mutate(denominator = n()) %>%
+  filter(Pclass == 3) %>%
+  mutate(numerator = n()) %>%
+  mutate(ratio = numerator / denominator) %>%
+  summarize(cond_prob = unique(ratio))
+```
+
+```{r titanic-exercise-2-check}
+grade_this_code()
+```
+
+### Concept Check
+
+$$P(A|B) = P(B|A)$$
+
+```{r concept-check-2}
+quiz(
+  question("Is the statement above TRUE or FALSE?",
+    answer("TRUE"),
+    answer("FALSE", correct = TRUE),
+    allow_retry = TRUE
+  )
+)
+```
+
+## Wrap Up
+
+Type your name and UC Merced e-mail address inside the quotation marks
+
+```{r student-info, exercise = TRUE}
+student_name  <- ""
+student_email <- ""
+```
+
+
+```{r context="server"}
+learnrhash::encoder_logic()
+```
+
+```{r encode, echo=FALSE}
+learnrhash::encoder_ui(
+  ui_before = default_ui(url = "https://catcourses.ucmerced.edu")
+)
+```
+
