@@ -1,0 +1,8 @@
+Package: Bio18materials
+Version: 0.1
+Date: 2021-10-06
+Title: Math 32 materials
+Description: homework apps for Bio 18 at UC Merced
+Author: Derek Sollberger <dsollberger@ucmerced.edu>
+Maintainer: Derek Sollberger <dsollberger@ucmerced.edu>
+License: GPL-3
